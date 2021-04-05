@@ -1,0 +1,6 @@
+{
+    "style": {
+        "includePaths": ["assets/scss"]
+    },
+    "interpolation": ["{{", "}}"]
+}

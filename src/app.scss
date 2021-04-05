@@ -1,0 +1,33 @@
+@import 'variables';
+
+// local
+
+:host {
+  display: flex;
+  flex-direction: column;
+  
+  justify-content: center;
+  align-items: center;
+
+  height: 100vh;
+
+  .asd {
+    color: $asd;
+    margin: 0 0 25px 0;
+  }
+
+  .kfc {
+    color: $kfc;
+    margin: 25px 0;
+  }
+
+  .active {
+    background: #ff0;
+  }
+}
+
+// global
+
+body {
+  background: #fefefe;
+}

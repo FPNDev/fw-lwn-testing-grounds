@@ -1,0 +1,16 @@
+<a *for="route in routeKeys" *if="!router.is(route)" :route="route">
+    {{ route || 'index' }}
+</a>
+<a :route="[404]" *nor>404 link</a>
+
+<c-dummy class="page">
+    <app-dynamic 
+        *if="getPageComponent(router.getCurrentPath())" 
+        :a="getA()"
+        :is="getPageComponent(router.getCurrentPath())"
+    >
+    </app-dynamic>
+    <div *else>
+        404
+    </div> 
+</c-dummy>
