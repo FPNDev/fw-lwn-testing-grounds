@@ -1,15 +1,15 @@
 import { Component, DOM, In } from "fe-lwn";
-import { LWNMetadata, DirectiveParser, Core } from "fe-lwn";
+import { LWNMetadata, Core } from "fe-lwn";
 
 @Component({
     selector: 'app-dynamic',
     template: './dynamic.component.html'
 }) 
 class DynamicComponent {
-    @DOM.Self() selfDOM: HTMLAnchorElement;
-    @In() is: any;
+    @DOM.Self() private selfDOM: HTMLAnchorElement;
+    @In() private is: any;
 
-    @Core.Parent() parent: { directiveParser: DirectiveParser };
+    @Core.Parent() private parent: any;
 
     lcChange({ is }) {
         if (is && is.new && this.selfDOM.isConnected) {
@@ -32,7 +32,7 @@ class DynamicComponent {
                     this.selfDOM.nextSibling
                 );
 
-                this.parent.directiveParser.parse(true);
+                Reflect.getMetadata('lwn:DirectiveParser', this.parent).parse(true);
             }
 
             this.selfDOM.remove();

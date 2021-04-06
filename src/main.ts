@@ -1,8 +1,6 @@
 import { 
   Component, 
-  group,
-  Core,
-  DirectiveParser
+  group
 } from "fe-lwn";
 import { Router } from "./module/router";
 import { UtilPath } from "./module/router/util/path";
@@ -14,6 +12,7 @@ import './module/dynamic';
 
 import { IndexPage } from "./views/guest/index";
 import { HomePage } from "./views/guest/home/home";
+import { E404Page } from "./views/guest/error/404";
 
 @Component({
   selector: 'app-main',
@@ -21,12 +20,11 @@ import { HomePage } from "./views/guest/home/home";
   styles: ['./app.scss']
 })
 class AppComponent {
-  @Core.DirectiveParser() readonly directiveParser: DirectiveParser;
-
   router: Router = util.singleton(Router);
   routes: { [_: string]: any } = {
     '': IndexPage,
-    'home': HomePage
+    'home': HomePage,
+    '404': E404Page
   };
 
   get routeKeys() {
@@ -37,11 +35,19 @@ class AppComponent {
     return this.routes[UtilPath.asString(path).slice(1)];
   }
  
+  get404PageComponent() {
+    return this.getPageComponent('404');
+  }
+
   async lcInit() {
     this.registerEvents();
   }
   lcDestroy() {
     this.killEvents();
+  }
+
+  onIsEvent($e) {
+    console.log($e);
   }
 
   getA() {
