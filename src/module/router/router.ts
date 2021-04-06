@@ -26,7 +26,11 @@ export class Router {
         }
     }
     navigate(route: RoutePath) {
-        history.pushState(null, null, UtilPath.asString(route));
+        history.pushState(null, null, UtilPath.asString(route));        
+        this.afterNavigate();
+    }
+
+    afterNavigate() {
         this.$navigate(UtilPath.asRouteGroup(this.getCurrentPath()));
     }
 
@@ -34,3 +38,7 @@ export class Router {
         return location.pathname;
     }
 } 
+
+window.onpopstate = () => {
+    Router.get().afterNavigate();
+}

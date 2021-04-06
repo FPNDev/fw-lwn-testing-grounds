@@ -34,7 +34,6 @@ class AppComponent {
   }
 
   getPageComponent(path: string) {
-    console.log(this.routes[UtilPath.asString(path).slice(1)]);
     return this.routes[UtilPath.asString(path).slice(1)];
   }
  
