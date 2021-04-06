@@ -23,7 +23,7 @@ export class IndexPage {
     }
 
     lcDestroy() {
-        this.is.close();
+        this.$is.close();
         clearInterval(this._interval);
     }
 }
