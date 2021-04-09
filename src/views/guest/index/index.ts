@@ -1,21 +1,16 @@
-import { Component, EventPipe, In, Out } from "fe-lwn";
+import { ChangeDetector, Component, Core, EventPipe, In, Out } from "fe-lwn";
 
 @Component({
     selector: 'app-page-index',
     template: './index.html'
 })
 export class IndexPage {
-    @Out() val = 0;
-    @Out() $is = new EventPipe();
-
-    private _interval: any;
+    val: number = this.random();;
+    $is: EventPipe;
 
     lcInit() {
-        this.$is.subscribe(this.setValFromIs);
-
-        this._interval = setInterval(() => {
-            this.$is(this.val++);
-        }, 1000);
+        this.$is = new EventPipe()
+        this.$is.subscribe(ev => this.setValFromIs(ev));
     }
 
     setValFromIs($ev) {
@@ -24,6 +19,9 @@ export class IndexPage {
 
     lcDestroy() {
         this.$is.close();
-        clearInterval(this._interval);
+    }
+
+    random() {
+        return Math.random();
     }
 }

@@ -1,4 +1,4 @@
-import { Component } from "fe-lwn";
+import { Component, In } from "fe-lwn";
 
 @Component({
     selector: 'app-page-home',
@@ -6,7 +6,11 @@ import { Component } from "fe-lwn";
     styles: ['./home.scss']
 })
 export class HomePage {
+    @In() params: any;
     a = 15;
+
+    lcInit() {
+    }
 
     doA() {
         alert(this.a++);

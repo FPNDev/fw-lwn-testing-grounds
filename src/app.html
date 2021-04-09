@@ -1,24 +1,5 @@
-<a *for="route in routeKeys" *if="!router.is(route)" :route="route">
-    {{ route || 'index' }}
-</a>
+<a :route="['index']">home</a>
+<a :route="['home']">home</a>
+<a :route="['blog/1']">blog</a>
 
-<div asdA="asd"></div>
-
-<c-dummy class="page">
-    <app-dynamic 
-        *if="getPageComponent(router.getCurrentPath())" 
-        @$is="onIsEvent($event)"
-        @@val="onIsEvent($event)"
-        :a="getA()"
-        :is="getPageComponent(router.getCurrentPath())"
-    >
-    </app-dynamic>
-    <app-dynamic 
-        *else="get404PageComponent()"
-        :is="get404PageComponent()"
-    >
-    </app-dynamic>
-    <div *else>
-        404
-    </div> 
-</c-dummy>
+<route-content></route-content>

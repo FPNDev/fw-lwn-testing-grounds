@@ -5,16 +5,31 @@ import { UtilPath } from './util/path';
 
 import { EventPipe } from "fe-lwn";
 import { util } from '../util';
+import { Route } from './interface/route';
+import { PathResolver } from './path-resolver';
 
 export class Router {
     readonly $navigate = new EventPipe<RoutePath>();
+    private routes: Route[] = [];
+
+    private readonly pathResolver = new PathResolver();
 
     static get() {
         return util.singleton(Router);
     }
 
     constructor() {
-        return util.singleton<Router>(this);
+        const singleton = util.singleton<Router>(this);
+
+        if (singleton === this) {      
+            this.navigationOccured();
+        }
+
+        return singleton;
+    }
+
+    getPathResolver() {
+        return this.pathResolver;
     }
 
     is(route: RoutePath, matchParts?: number) {
@@ -27,18 +42,28 @@ export class Router {
     }
     navigate(route: RoutePath) {
         history.pushState(null, null, UtilPath.asString(route));        
-        this.afterNavigate();
+        this.navigationOccured();
     }
 
-    afterNavigate() {
+    navigationOccured() {
+        this.pathResolver.resolvePath(this.getCurrentPath(), this.routes);
         this.$navigate(UtilPath.asRouteGroup(this.getCurrentPath()));
     }
 
     getCurrentPath() { 
         return location.pathname;
     }
+
+    registerRoutes(routes: Route[]) {
+        this.routes = routes;
+        this.navigationOccured();
+    }
+
+    getRoutes() {
+        return this.routes;
+    }
 } 
 
 window.onpopstate = () => {
-    Router.get().afterNavigate();
+    Router.get().navigationOccured();
 }
