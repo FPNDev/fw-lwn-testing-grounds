@@ -110,11 +110,11 @@ export class PathResolver {
                 []
             );
                 
-            Promise.all(pathsGuardsResolution.map(pathGuard => pathGuard.res))
+            Promise.allSettled(pathsGuardsResolution.map(pathGuard => pathGuard.res))
                 .then(resolutions => {
-
                     for (const idx in resolutions) {
-                        pathsGuardsResolution[idx].path.guards[pathsGuardsResolution[idx].idx] = resolutions[idx];
+                        pathsGuardsResolution[idx].path.guards[pathsGuardsResolution[idx].idx] = 
+                            resolutions[idx].status === 'fulfilled' ? (resolutions[idx] as any).value : false;
                     }
 
                     const pathGuarded = pathUnordered.filter(path => {

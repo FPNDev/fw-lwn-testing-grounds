@@ -1,4 +1,4 @@
-import { ActivationGuard, Route } from "./module/router";
+import { Route } from "./module/router";
 import { AuthGuard } from "./shared/guard/auth.guard";
 import { HomePage } from "./view/page/guest/home/home";
 import { IndexPage } from "./view/page/guest/index/index";
