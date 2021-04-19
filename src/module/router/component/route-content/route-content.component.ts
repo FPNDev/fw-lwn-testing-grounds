@@ -13,9 +13,9 @@ class RouteContentComponent {
     private currentElement: { new(...args: any): any } = undefined;
 
     readonly router = Router.get();
-    private navigate$: EventPipeSubscription;
 
-    private $updateSub: any;
+    private $navigate: EventPipeSubscription;
+    private $updateSub: EventPipeSubscription;
 
     private params: any
 
@@ -25,7 +25,7 @@ class RouteContentComponent {
         RouteContentComponent.instances.push(this);
         this.runUpdate();
 
-        this.navigate$ = this.router.$navigate.subscribe(() => {
+        this.$navigate = this.router.$navigate.subscribe(() => {
             this.runUpdate();
         });
     } 
@@ -33,7 +33,7 @@ class RouteContentComponent {
     runUpdate() {
         this.$updateSub?.unsubscribe();
 
-       this.$updateSub = this.router.getPathResolver()
+        this.$updateSub = this.router.getPathResolver()
             .pathOrderered$
             .subscribe(pathOrderered => {
                 const navigationSorted = pathOrderered
@@ -47,7 +47,7 @@ class RouteContentComponent {
                 if (this.currentElement) {
                     this.changeDetector.runUpdate(true);
                 }
-            })
+            });
     }
 
     getIndex() {
@@ -56,7 +56,7 @@ class RouteContentComponent {
 
 
     lcDestroy() {
-        this.navigate$ && this.navigate$.unsubscribe();
+        this.$navigate && this.$navigate.unsubscribe();
         RouteContentComponent.instances.splice(RouteContentComponent.instances.indexOf(this), 1);
     }
 }
