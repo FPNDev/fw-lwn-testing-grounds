@@ -1,6 +1,7 @@
 import { ChangeDetector, Component, EventPipeSubscription } from "fe-lwn";
 import { Core } from "fe-lwn";
 
+import '../../../dynamic';
 import { Router } from "../../router";
 
 @Component({
@@ -13,6 +14,8 @@ class RouteContentComponent {
 
     readonly router = Router.get();
     private navigate$: EventPipeSubscription;
+
+    private $updateSub: any;
 
     private params: any
 
@@ -28,18 +31,23 @@ class RouteContentComponent {
     } 
 
     runUpdate() {
-        const navigationSorted = this.router.getPathResolver()
-            .getRoutesOrdered()
-            .filter(route => route.component); 
+        this.$updateSub?.unsubscribe();
 
-        const currentConfig = navigationSorted[this.getIndex()];
+       this.$updateSub = this.router.getPathResolver()
+            .pathOrderered$
+            .subscribe(pathOrderered => {
+                const navigationSorted = pathOrderered
+                    .filter(route => route.component); 
 
-        this.currentElement = currentConfig?.component;
-        this.params = currentConfig?.params;
-        
-        if (this.currentElement) {
-            this.changeDetector.runUpdate(true);
-        }
+                const currentConfig = navigationSorted[this.getIndex()];
+
+                this.currentElement = currentConfig?.component;
+                this.params = currentConfig?.params;
+
+                if (this.currentElement) {
+                    this.changeDetector.runUpdate(true);
+                }
+            })
     }
 
     getIndex() {

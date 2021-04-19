@@ -12,6 +12,6 @@ export class AuthService implements AuthServiceInterface {
     storage = util.singleton(AuthStorage);
 
     async authenticate(credentials: Credentials) {
-        return this.storage.getByCredentials(credentials);
+        return this.storage.getByCredentials(credentials) ?? Promise.reject();
     }
 }

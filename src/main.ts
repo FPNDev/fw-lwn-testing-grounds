@@ -5,8 +5,6 @@ import {
 import { Router } from "./module/router";
 import { routes } from './routes';
 
-import './module/dynamic';
-
 @Component({
   selector: 'app-main',
   template: './app.html',
@@ -17,11 +15,5 @@ class AppComponent {
 
   constructor() {
     this.router.registerRoutes(routes);
-  }
-
-  lcInit() {
-  }
-
-  lcDestroy() {
   }
 }

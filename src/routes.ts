@@ -1,18 +1,17 @@
-import { Route } from "./module/router";
-import { HomePage } from "./views/guest/home/home";
-import { IndexPage } from "./views/guest/index";
+import { ActivationGuard, Route } from "./module/router";
+import { AuthGuard } from "./shared/guard/auth.guard";
+import { HomePage } from "./view/page/guest/home/home";
+import { IndexPage } from "./view/page/guest/index/index";
 
 export const routes: Route[] = [
     {
         path: '',
-        component: IndexPage
+        component: IndexPage,
+        guards: [AuthGuard]
     },
     {
-        path: 'blog/:id',
-        component: HomePage
-    }
-    {
-        path: 'home',
-        component: HomePage
-    }
+        path: '',
+        component: HomePage,
+        guards: []
+    },
 ]
