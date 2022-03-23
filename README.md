@@ -1,3 +1,6 @@
+# This a test of LWN 0.1a on real life project
+## @deprecated
+
 # How to start
 * Create root project folder
 * Run `git clone https://github.com/FPNDev/flix-2020-frontend.git` in project root
