@@ -1,5 +1,6 @@
-# This a test of LWN 0.1a on real life project
-## @deprecated
+# This a test of LWN 0.1a on real life project 
+
+Project is **deprecated**
 
 # How to start
 * Create root project folder
